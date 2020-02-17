@@ -1,11 +1,6 @@
 # Pinpoint
 
-- SMS is faster... so setup that up.
-- Setting a campaign which requires a segment.
-- Testing messaging.
-- Add a journey but keep it simple.
-- two messaging - https://docs.aws.amazon.com/pinpoint/latest/userguide/channels-sms-two-way.html
-- do a lambda function listens
+![](https://d1.awsstatic.com/product-marketing/Pinpoint/Product-page-diagram_Amazon-Pinpoint-with-Journeys-@2x.59f755aedb4ea26ddbdeade13529046129c3d7a1.png)
 
 ## Level 0: Prerequisites
 
@@ -57,11 +52,14 @@ lash init --quick-start
 ## Level 3 - Two Way Customer Communication
 
 - Clone this repo
+- Go to the src/SurveySms/function.cs file and update APP_ID with the Project ID from the web console
 - Deploy a lambda sharp project
 
 ```bash
 lash deploy
 ```
+
+** NOTE ** Please wait for deploy to finish before moving to the next step
 
 - Enable two-way SMS by going to Settings > SMS and voice > click on your long code number then enable two-way SMS
 - Select the SNS topic with `CustomerSurvey` in the title
@@ -78,14 +76,12 @@ lash deploy
 }
 ```
 
-- Respond back with a question to the customer (via SMS in lambda function).
+- Respond to the long code phone number with a question to the customer (via SMS in lambda function).
   - Checkout the SDK information: <https://docs.aws.amazon.com/pinpoint/latest/developerguide/send-messages-sms.html>
-- add a new person to a segment
-- Send a campaign to the segment
 
 ## Boss - State management
 
-- Ask 5 questions.
+- Ask 5 questions to a customer via 5 separate SMS messages. They must respond to each question before moving to the next.
 - Provide a summary to the customer at the end of the 5th question.
 
 ## Tear down is important

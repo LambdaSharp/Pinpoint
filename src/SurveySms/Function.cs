@@ -38,7 +38,7 @@ namespace My.CustomerSurvey.SurveySms {
         // The Pinpoint project/application ID to use when you send this message.
         // Make sure that the SMS channel is enabled for the project or application
         // that you choose. It's in the web console!
-        const string APP_ID = "10ed9a64551d4b5aa4d178915d49e618";
+        const string APP_ID = "";
 
         //--- Methods ---
         public override async Task InitializeAsync(LambdaConfig config) {
@@ -47,7 +47,9 @@ namespace My.CustomerSurvey.SurveySms {
 
         public override async Task ProcessMessageAsync(Message message) {
             SaveToCloudwatch();
-            await RespondToMessage(message.DestinationNumber, message.OriginationNumber, "yes, i'm listening");
+
+            // Uncomment the code below when you want to reply back to someone
+            // await RespondToMessage(message.DestinationNumber, message.OriginationNumber, "yes, i'm listening");
         }
 
         private async Task RespondToMessage(string from, string to, string text) {
