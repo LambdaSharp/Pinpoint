@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Amazon.Lambda.Core;
+using Amazon.Pinpoint;
+using Amazon.Pinpoint.Model;
 using LambdaSharp;
 using LambdaSharp.SimpleNotificationService;
 
@@ -13,27 +16,71 @@ namespace My.CustomerSurvey.SurveySms {
 
         //--- Properties ---
 
-        public string MessageBody { get; set; }
-        public string DestinationNumber { get; set; }   
-        public string OriginationNumber { get; set; }
-        public string InboundMessageId { get; set; }    
+        public string MessageBody {
+            get; set;
+        }
+        public string DestinationNumber {
+            get; set;
+        }
+        public string OriginationNumber {
+            get; set;
+        }
+        public string InboundMessageId {
+            get; set;
+        }
     }
 
     public class Function : ALambdaTopicFunction<Message> {
+        public AmazonPinpointClient Client {
+            get; private set;
+        }
+
+        // The Pinpoint project/application ID to use when you send this message.
+        // Make sure that the SMS channel is enabled for the project or application
+        // that you choose. It's in the web console!
+        const string APP_ID = "10ed9a64551d4b5aa4d178915d49e618";
 
         //--- Methods ---
         public override async Task InitializeAsync(LambdaConfig config) {
-
-            // TO-DO: add function initialization and reading configuration settings
+            Client = new AmazonPinpointClient();
         }
 
         public override async Task ProcessMessageAsync(Message message) {
-            await SaveToCloudwatchAsync(message);
-            // TO-DO: add business logic
+            SaveToCloudwatch();
+            await RespondToMessage(message.DestinationNumber, message.OriginationNumber, "yes, i'm listening");
         }
 
-        public async Task SaveToCloudwatchAsync(Message message) {
-            // LogInfo($"Message.Text = {message.Text}");
+        private async Task RespondToMessage(string from, string to, string text) {
+            var sendMessagesRequest = new SendMessagesRequest() {
+                ApplicationId = APP_ID,
+                MessageRequest = new MessageRequest() {
+                    Addresses = new Dictionary<string, AddressConfiguration>() {
+                        {
+                            to, new AddressConfiguration(){ ChannelType = ChannelType.SMS }
+                        }
+                    },
+                    MessageConfiguration = new DirectMessageConfiguration() {
+                        SMSMessage = new SMSMessage() {
+                            Body = text,
+                            MessageType = "TRANSACTIONAL",
+                            OriginationNumber = from
+                        }
+                    }
+                }
+            };
+            try {
+                var response = await Client.SendMessagesAsync(sendMessagesRequest);
+                LogInfo(response.MessageResponse.RequestId);
+                foreach(var messageResponseResult in response.MessageResponse.Result) {
+                    LogInfo($"{messageResponseResult.Key}:{messageResponseResult.Value}");
+                }
+            }
+            catch(System.Exception ex) {
+                LogError(ex);
+            }
+        }
+
+        private void SaveToCloudwatch() {
             LogInfo($"CurrentRecord.Message = {CurrentRecord.Message}");
             LogInfo($"CurrentRecord.MessageAttributes = {CurrentRecord.MessageAttributes}");
             foreach(var attribute in CurrentRecord.MessageAttributes) {
