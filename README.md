@@ -40,21 +40,21 @@ The following command uses the LambdaSharp CLI to create a new deployment tier o
 lash init --quick-start
 ```
 
-## Level 1
+## Level 1 - Setting up SMS
 
 - Create a new project with AWS Pinpoint found in the AWS console
 - Configure SMS & Voice
   - Request a long code.
 - Send a simple test message to one of the group member's number
 
-## Level 2
+## Level 2 - Launching a Campaign
 
 - Create a segment: import CSV file (download example CSV for formatting) with SMS numbers & names for all group members
 - Create a template that dynamically uses an attribute from your segment
 - Create a campaign using the segment and template you created
 - Choose to launch campaign immediately to get your personalized text message!
 
-## Level 3
+## Level 3 - Two Way Customer Communication
 
 - Clone this repo
 - Deploy a lambda sharp project
@@ -65,28 +65,30 @@ lash deploy
 
 - Enable two-way SMS by going to Settings > SMS and voice > click on your long code number then enable two-way SMS
 - Select the SNS topic with `CustomerSurvey` in the title
-- Reply to the text from your long code number and see the message appear in your Cloudwatch logs. Here is an example of what a message looks like:
+- Reply to the text from your long code number and see the message appear in your CloudWatch logs. Here is an example of what a message looks like:
 
-````{
-    "originationNumber": "+XXXXXXXXXX",
-    "destinationNumber": "+XXXXXXXXXX",
-    "messageKeyword": "keyword_045616484003",
-    "messageBody": "This is my response ",
-    "inboundMessageId": "8dc9d631-9133-5232-82a8-808675b4c07b",
-    "previousPublishedMessageId": "k7hd8hsna3vr9oqf49seqd5opnq302n64divurg0"
-}```
+```json
+{
+  "originationNumber": "+XXXXXXXXXX",
+  "destinationNumber": "+XXXXXXXXXX",
+  "messageKeyword": "keyword_045616484003",
+  "messageBody": "This is my response ",
+  "inboundMessageId": "8dc9d631-9133-5232-82a8-808675b4c07b",
+  "previousPublishedMessageId": "k7hd8hsna3vr9oqf49seqd5opnq302n64divurg0"
+}
+```
 
-## Level 4
-- Create a survey
-- Different actions for various responses (Pinpoint keywords)
-
-## BOSS LEVEL (via code)
-- Based on level 3, add a new person to a segment
+- Respond back with a question to the customer (via SMS in lambda function).
+  - Checkout the SDK information: <https://docs.aws.amazon.com/pinpoint/latest/developerguide/send-messages-sms.html>
+- add a new person to a segment
 - Send a campaign to the segment
 
+## Boss - State management
+
+- Ask 5 questions.
+- Provide a summary to the customer at the end of the 5th question.
 
 ## Tear down is important
 
 - Go to Pinpoint > All projects > LambdaSharp > Settings > SMS and voice
 - Select the phone number and click Remove long code
-````
