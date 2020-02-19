@@ -1,33 +1,37 @@
-# Pinpoint
+# Amazon Pinpoint Challenge
 
-![](https://d1.awsstatic.com/product-marketing/Pinpoint/Product-page-diagram_Amazon-Pinpoint-with-Journeys-@2x.59f755aedb4ea26ddbdeade13529046129c3d7a1.png)
+In this challenge, we're going to explore [Amazon Pinpoint](https://aws.amazon.com/pinpoint/) to send SMS messages.
+
+![](images/AmazonPinpoint.png)
 
 ## Level 0: Prerequisites
 
 ### Install SDK & Tools
-
 Make sure the following tools are installed.
 
 - [Download and install the .NET Core SDK](https://dotnet.microsoft.com/download)
-- [Download and install the AWS Command Line Interface](https://aws.amazon.com/cli/)
 - [Download and install Git Command Line Interface](https://git-scm.com/downloads)
 
 ### Setup AWS Account and CLI
-
 The challenge requires an AWS account. AWS provides a [_Free Tier_](https://aws.amazon.com/free/), which is sufficient for most challenges.
 
 - [Create an AWS Account](https://aws.amazon.com)
-- [Configure your AWS profile with the AWS CLI for us-east-1 (N. Virginia)](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html#cli-quick-configuration)
+
+### Clone GitHub Repository
+Next, you will need to clone this repo into your working directory:
+
+```bash
+git clone https://github.com/LambdaSharp/Pinpoint.git
+```
 
 ### Setup LambdaSharp Deployment Tier
-
 The following command uses the `dotnet` CLI to install the LambdaSharp CLI.
 
 ```bash
 dotnet tool install --global LambdaSharp.Tool
 ```
 
-**NOTE:** if you have installed LambdaSharp.Tool in the past, you will need to remove it first by running `dotnet tool uninstall -g LambdaSharp.Tool` first.
+**NOTE:** if you have installed LambdaSharp.Tool in the past, you will need to run `dotnet tool update -g LambdaSharp.Tool` instead.
 
 The following command uses the LambdaSharp CLI to create a new deployment tier on the default AWS account. Specify another account using `--aws-profile ACCOUNT_NAME`.
 
@@ -37,33 +41,38 @@ lash init --quick-start
 
 ## Level 1 - Setting up SMS
 
-- Create a new project with AWS Pinpoint found in the AWS console
-- Configure SMS & Voice
-  - Request a long code.
-- Send a simple test message to one of the group member's number
+1. Create a new project with AWS Pinpoint found in the AWS console
+1. Configure SMS & Voice
+    - Request a long code.
+1. Send a simple test message to your mobile phone
 
 ## Level 2 - Launching a Campaign
 
-- Create a segment: import CSV file (download example CSV for formatting) with SMS numbers & names for all group members
-- Create a template that dynamically uses an attribute from your segment
-- Create a campaign using the segment and template you created
-- Choose to launch campaign immediately to get your personalized text message!
+1. Create a segment
+    1. Use Import CSV file
+    1. Download the example CSV for formatting
+    1. Update the CSV file with mobile numbers & names for all group members
+        - Use International phone numbers notation (e.g. 16195551234)
+1. Create a template that dynamically uses an attribute from your segment
+1. Create a campaign using the segment and template you created
+1. Choose to launch campaign immediately to get your personalized text message!
 
 ## Level 3 - Two Way Customer Communication
 
-- Clone this repo
-- Go to the src/SurveySms/function.cs file and update APP_ID with the Project ID from the web console
-- Deploy a lambda sharp project
+1. Go to the `SurveySms/function.cs` file and update APP_ID with the Project ID from the web console
+1. Deploy the LambdaSharp project
 
 ```bash
 lash deploy
 ```
 
-** NOTE ** Please wait for deploy to finish before moving to the next step
+**NOTE:** Please wait for deploy to finish before moving to the next step
 
 - Enable two-way SMS by going to Settings > SMS and voice > click on your long code number then enable two-way SMS
 - Select the SNS topic with `CustomerSurvey` in the title
-- Reply to the text from your long code number and see the message appear in your CloudWatch logs. Here is an example of what a message looks like:
+- Reply to the text from your long code number and see the message appear in your CloudWatch logs. (Go to _CloudFormation > My-Pinpoint > Resources_ then click on the `PinpointSmsTopic`) link
+
+Here is an example of what a message looks like:
 
 ```json
 {
@@ -77,7 +86,7 @@ lash deploy
 ```
 
 - Respond to the long code phone number with a question to the customer (via SMS in lambda function).
-  - Checkout the SDK information: <https://docs.aws.amazon.com/pinpoint/latest/developerguide/send-messages-sms.html>
+    - Checkout the SDK information: <https://docs.aws.amazon.com/pinpoint/latest/developerguide/send-messages-sms.html>
 
 ## Boss - State management
 
