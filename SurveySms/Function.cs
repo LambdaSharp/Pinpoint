@@ -15,30 +15,21 @@ namespace My.CustomerSurvey.SurveySms {
     public class Message {
 
         //--- Properties ---
-
-        public string MessageBody {
-            get; set;
-        }
-        public string DestinationNumber {
-            get; set;
-        }
-        public string OriginationNumber {
-            get; set;
-        }
-        public string InboundMessageId {
-            get; set;
-        }
+        public string MessageBody { get; set; }
+        public string DestinationNumber { get; set; }
+        public string OriginationNumber { get; set; }
+        public string InboundMessageId { get; set; }
     }
 
     public class Function : ALambdaTopicFunction<Message> {
-        public AmazonPinpointClient Client {
-            get; private set;
-        }
 
         // The Pinpoint project/application ID to use when you send this message.
         // Make sure that the SMS channel is enabled for the project or application
         // that you choose. It's in the web console!
         const string APP_ID = "";
+
+        //--- Properties ---
+        public AmazonPinpointClient Client { get; private set; }
 
         //--- Methods ---
         public override async Task InitializeAsync(LambdaConfig config) {
@@ -53,16 +44,16 @@ namespace My.CustomerSurvey.SurveySms {
         }
 
         private async Task RespondToMessage(string from, string to, string text) {
-            var sendMessagesRequest = new SendMessagesRequest() {
+            var sendMessagesRequest = new SendMessagesRequest {
                 ApplicationId = APP_ID,
-                MessageRequest = new MessageRequest() {
-                    Addresses = new Dictionary<string, AddressConfiguration>() {
-                        {
-                            to, new AddressConfiguration(){ ChannelType = ChannelType.SMS }
+                MessageRequest = new MessageRequest {
+                    Addresses = new Dictionary<string, AddressConfiguration> {
+                        [to] = new AddressConfiguration {
+                            ChannelType = ChannelType.SMS
                         }
                     },
-                    MessageConfiguration = new DirectMessageConfiguration() {
-                        SMSMessage = new SMSMessage() {
+                    MessageConfiguration = new DirectMessageConfiguration {
+                        SMSMessage = new SMSMessage {
                             Body = text,
                             MessageType = "TRANSACTIONAL",
                             OriginationNumber = from
@@ -76,9 +67,8 @@ namespace My.CustomerSurvey.SurveySms {
                 foreach(var messageResponseResult in response.MessageResponse.Result) {
                     LogInfo($"{messageResponseResult.Key}:{messageResponseResult.Value}");
                 }
-            }
-            catch(System.Exception ex) {
-                LogError(ex);
+            } catch(System.Exception e) {
+                LogError(e);
             }
         }
 

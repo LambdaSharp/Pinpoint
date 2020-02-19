@@ -1,18 +1,7 @@
-# The Module Name is used as prefix for all contained resources.
-Module: LambdaSharp.CustomerSurvey
-
-# The Module Version is shown in the CloudFormation stack and Lambda function descriptions.
+Module: My.Pinpoint
 Version: 1.1-DEV
-
-# The Module Description is shown in the AWS CloudFormation console with the version number.
 Description: A LambdaSharp hackathon using AWS Pinpoint
-
-# The Items section defines values and resources for the module.
 Items:
-
-  - Variable: MyVariable
-    Description: Variable description
-    Value: A sample variable value for the module
 
   - Function: SurveySms
     Description: TO-DO - update function description
