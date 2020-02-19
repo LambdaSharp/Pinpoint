@@ -52,7 +52,7 @@ lash init --quick-start
     1. Use Import CSV file
     1. Download the example CSV for formatting
     1. Update the CSV file with mobile numbers & names for all group members
-        - Use International phone numbers notation (e.g. +1-619-555-1234)
+        - Use International phone numbers notation (e.g. 16195551234)
 1. Create a template that dynamically uses an attribute from your segment
 1. Create a campaign using the segment and template you created
 1. Choose to launch campaign immediately to get your personalized text message!
