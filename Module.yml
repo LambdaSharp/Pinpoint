@@ -1,6 +1,10 @@
 Module: My.Pinpoint
 Version: 1.1-DEV
 Description: A LambdaSharp hackathon using AWS Pinpoint
+Using:
+
+  - Module: LambdaSharp.S3.IO@lambdasharp
+
 Items:
 
   - Function: SurveySms
@@ -14,6 +18,15 @@ Items:
     Description: The topic that Pinpoint generates on user SMS responses
     Type: AWS::SNS::Topic
     Allow: Subscribe
+
+  - Resource: PinpointBucket
+    Type: AWS::S3::Bucket
+    Allow: ReadWrite
+
+  - Resource: EmptyBucket
+    Type: LambdaSharp::S3::EmptyBucket
+    Properties:
+      Bucket: !Ref PinpointBucket
 
   - Resource: PinpointPolicy
     Type: AWS::IAM::Policy
@@ -29,3 +42,5 @@ Items:
             Resource: "*"
       Roles:
         - !Ref Module::Role
+
+  

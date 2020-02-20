@@ -93,6 +93,11 @@ Here is an example of what a message looks like:
 - Ask 5 questions to a customer via 5 separate SMS messages. They must respond to each question before moving to the next.
 - Provide a summary to the customer at the end of the 5th question.
 
+### Resources
+
+<https://docs.aws.amazon.com/AmazonS3/latest/dev/UploadObjSingleOpNET.html>
+<https://docs.aws.amazon.com/AmazonS3/latest/dev/RetrievingObjectUsingNetSDK.html>
+
 ## BOSS - Completion Event
 
 Based on level 4, send an event to AWS Pinpoint notifying that the customer completed the survey. Show this to us at the end of the night!

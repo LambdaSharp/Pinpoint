@@ -30,10 +30,14 @@ namespace My.CustomerSurvey.SurveySms {
 
         //--- Properties ---
         public AmazonPinpointClient Client { get; private set; }
+        public string PinpointBucket { get; private set; }
 
         //--- Methods ---
         public override async Task InitializeAsync(LambdaConfig config) {
             Client = new AmazonPinpointClient();
+            
+            // TODO: s3 bucket for storage
+            PinpointBucket = config.ReadS3BucketName("PinpointBucket");
         }
 
         public override async Task ProcessMessageAsync(Message message) {
