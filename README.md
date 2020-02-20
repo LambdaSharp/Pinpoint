@@ -42,25 +42,25 @@ lash init --quick-start
 ## Level 1 - Setting up SMS
 
 1. Create a new project with AWS Pinpoint found in the AWS console
-1. Configure SMS & Voice
+2. Configure SMS & Voice
     - Request a long code.
-1. Send a simple test message to your mobile phone
+3. Send a simple test message to your mobile phone
 
 ## Level 2 - Launching a Campaign
 
 1. Create a segment
-    1. Use Import CSV file
-    1. Download the example CSV for formatting
-    1. Update the CSV file with mobile numbers & names for all group members
+    a. Use Import CSV file
+    b. Download the example CSV for formatting
+    c. Update the CSV file with mobile numbers & names for all group members
         - Use International phone numbers notation (e.g. 16195551234)
-1. Create a template that dynamically uses an attribute from your segment
-1. Create a campaign using the segment and template you created
-1. Choose to launch campaign immediately to get your personalized text message!
+2. Create a template that dynamically uses an attribute from your segment
+3. Create a campaign using the segment and template you created
+4. Choose to launch campaign immediately to get your personalized text message!
 
 ## Level 3 - Two Way Customer Communication
 
 1. Go to the `SurveySms/function.cs` file and update APP_ID with the Project ID from the web console
-1. Deploy the LambdaSharp project
+2. Deploy the LambdaSharp project
 
 ```bash
 lash deploy
@@ -88,10 +88,20 @@ Here is an example of what a message looks like:
 - Respond to the long code phone number with a question to the customer (via SMS in lambda function).
     - Checkout the SDK information: <https://docs.aws.amazon.com/pinpoint/latest/developerguide/send-messages-sms.html>
 
-## Boss - State management
+## Level 4 - State management
 
 - Ask 5 questions to a customer via 5 separate SMS messages. They must respond to each question before moving to the next.
 - Provide a summary to the customer at the end of the 5th question.
+
+## BOSS - Completion Event
+
+Based on level 4, send an event to AWS Pinpoint notifying that the customer completed the survey. Show this to us at the end of the night!
+
+### Resources 
+
+<https://docs.aws.amazon.com/cli/latest/reference/pinpoint/put-events.html>
+<https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/Pinpoint/TPinpointClient.html>
+<https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/Pinpoint/MPinpointPutEventsPutEventsRequest.html>
 
 ## Tear down is important
 
