@@ -22,6 +22,7 @@ Items:
   - Resource: PinpointBucket
     Type: AWS::S3::Bucket
     Allow: ReadWrite
+    Scope: SurveySms
 
   - Resource: EmptyBucket
     Type: LambdaSharp::S3::EmptyBucket
@@ -43,4 +44,4 @@ Items:
       Roles:
         - !Ref Module::Role
 
-  
+
