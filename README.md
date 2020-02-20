@@ -70,7 +70,7 @@ lash deploy
 
 - Enable two-way SMS by going to Settings > SMS and voice > click on your long code number then enable two-way SMS
 - Select the SNS topic with `My.Pinpoint` in the title
-- Reply to the text from your long code number and see the message appear in your CloudWatch logs. (Go to _CloudFormation > My-Pinpoint > Resources_ then click on the `PinpointSmsTopic`) link
+- Reply to the text from your long code number and see the message appear in your CloudWatch logs. (Go to _CloudFormation > My-Pinpoint > Resources_ then click on the `SurveySmsLogGroups`) link
 
 Here is an example of what a message looks like:
 
