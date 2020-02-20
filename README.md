@@ -69,7 +69,7 @@ lash deploy
 **NOTE:** Please wait for deploy to finish before moving to the next step
 
 - Enable two-way SMS by going to Settings > SMS and voice > click on your long code number then enable two-way SMS
-- Select the SNS topic with `CustomerSurvey` in the title
+- Select the SNS topic with `My.Pinpoint` in the title
 - Reply to the text from your long code number and see the message appear in your CloudWatch logs. (Go to _CloudFormation > My-Pinpoint > Resources_ then click on the `PinpointSmsTopic`) link
 
 Here is an example of what a message looks like:
@@ -102,7 +102,7 @@ Here is an example of what a message looks like:
 
 Based on level 4, send an event to AWS Pinpoint notifying that the customer completed the survey. Show this to us at the end of the night!
 
-### Resources 
+### Resources
 
 <https://docs.aws.amazon.com/cli/latest/reference/pinpoint/put-events.html>
 <https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/Pinpoint/TPinpointClient.html>
